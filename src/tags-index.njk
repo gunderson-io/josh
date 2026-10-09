@@ -1,0 +1,21 @@
+---
+layout: base.njk
+title: Tags
+permalink: /tags/
+---
+<p class="prompt"><span class="ps1">grep -c</span> <span class="cmd">tags posts/* | sort -rn | head</span></p>
+<h1>Tags</h1>
+<p>Categories are the <em>kind</em> of post (<a href="{{ '/categories/' | url }}">see them</a>); tags are the things inside it: bands, games, gear. The common ones are here, and everything else is below.</p>
+<ul class="tag-cloud">
+  {% for t in collections.tagList %}{% if t.count >= 3 %}
+  <li><a href="{{ ("/tags/" + t.slug + "/") | url }}">{{ t.name }}</a> <span class="count">{{ t.count }}</span></li>
+  {% endif %}{% endfor %}
+</ul>
+<details>
+  <summary>everything else (the tags used once or twice)</summary>
+  <ul class="tag-cloud">
+    {% for t in collections.tagList %}{% if t.count < 3 %}
+    <li><a href="{{ ("/tags/" + t.slug + "/") | url }}">{{ t.name }}</a> <span class="count">{{ t.count }}</span></li>
+    {% endif %}{% endfor %}
+  </ul>
+</details>

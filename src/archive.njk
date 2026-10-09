@@ -1,0 +1,15 @@
+---
+layout: base.njk
+title: Archive
+permalink: /archive/
+---
+<p class="prompt"><span class="ps1"><span class="who">visitor</span>@<span class="host">gunderson.io</span>:~$</span> <span class="cmd">ls -lR posts/</span></p>
+<p class="prompt"><span class="ps1">grep -i</span> <input id="filter" class="filter" type="text" placeholder="type to filter, press / to focus" autocomplete="off" spellcheck="false" aria-label="Filter posts"></p>
+{% for group in collections.postsByYear %}
+<h2 class="dir"><span class="perm">drwxr-xr-x</span>{{ group.year }}/</h2>
+<ul class="ls">
+  {% for post in group.items %}
+  <li><span class="perm">-rw-r--r--</span><span class="own">josh</span><span class="when">{{ post.date | shortDate }}</span><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endfor %}

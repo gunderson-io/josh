@@ -1,0 +1,6 @@
+{
+  "tags": "post",
+  "layout": "post",
+  "templateEngineOverride": "md",
+  "permalink": "/{{ page.inputPath | fileDatePath(page.date | datePath) }}/{{ page.fileSlug }}/"
+}

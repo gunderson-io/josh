@@ -1,0 +1,32 @@
+---
+layout: base.njk
+title: GunderBlog
+isHome: true
+pagination:
+  data: collections.post
+  size: 8
+  reverse: true
+  alias: posts
+permalink: "{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% else %}/{% endif %}"
+---
+<p class="prompt"><span class="ps1"><span class="who">visitor</span>@<span class="host">gunderson.io</span>:~$</span> <span class="cmd">ls -t posts | head -8</span></p>
+{% for post in posts %}
+<article class="card">
+  <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+  <p class="meta">
+    <time datetime="{{ post.date | isoDate }}">{{ post.date | longDate }}</time>
+    {% if post.data.categories %}&middot; {% for c in post.data.categories %}<a class="cat" href="{{ ('/categories/' + (c | tagSlug) + '/') | url }}">{{ c }}</a>{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+  </p>
+  {% set thumb = post.templateContent | firstImage %}
+  {% set snippet = post.templateContent | excerpt(55) %}
+  {% if thumb %}<a class="card-thumb" href="{{ post.url | url }}"><img src="{{ thumb }}" alt="" loading="lazy"></a>{% endif %}
+  {% if snippet %}<p class="snippet">{{ snippet }} <a href="{{ post.url | url }}">Read more &rarr;</a></p>{% endif %}
+</article>
+{% endfor %}
+
+<nav class="pager" aria-label="Pagination">
+  {% if pagination.href.previous %}<a href="{{ pagination.href.previous | url }}">&larr; Newer</a>{% else %}<span></span>{% endif %}
+  <span class="pager-pos">Page {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}</span>
+  {% if pagination.href.next %}<a href="{{ pagination.href.next | url }}">Older &rarr;</a>{% else %}<span></span>{% endif %}
+</nav>
+<p class="pager-more"><a href="{{ '/archive/' | url }}">Browse the full archive</a></p>

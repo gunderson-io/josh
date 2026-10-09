@@ -1,0 +1,15 @@
+{
+  "name": "gunderblog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-img": "^7.0.0",
+    "figlet": "^1.12.0",
+    "sass": "^1.105.1"
+  }
+}

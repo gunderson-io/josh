@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#151515">
+    <title>{% if title and title != site.title %}{{ title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | url }}">
+    <link rel="stylesheet" href="{{ '/css/hacker.css' | url }}?v={{ build }}">
+    <link rel="stylesheet" href="{{ '/css/site.css' | url }}?v={{ build }}">
+  </head>
+
+  <body{% if isHome %} data-home{% endif %}>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="{{ '/' | url }}">
+          <pre class="banner" aria-hidden="true">{{ ascii.text }}</pre>
+          <h1 class="site-name">{{ site.title }}</h1>
+        </a>
+
+        <section id="downloads">
+          <a href="{{ '/' | url }}" class="btn{% if page.url == '/' %} current{% endif %}">home</a>
+          <a href="{{ '/archive/' | url }}" class="btn{% if page.url == '/archive/' %} current{% endif %}">archive</a>
+          <a href="{{ '/categories/' | url }}" class="btn{% if '/categories/' in page.url %} current{% endif %}">categories</a>
+          <a href="{{ '/tags/' | url }}" class="btn{% if '/tags/' in page.url %} current{% endif %}">tags</a>
+          <a href="{{ '/feed.xml' | url }}" class="btn btn-rss" title="Atom feed" aria-label="Atom feed"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><circle cx="3" cy="13" r="1.9" fill="currentColor"/><path d="M2 7.2a6.8 6.8 0 0 1 6.8 6.8M2 2.2a11.8 11.8 0 0 1 11.8 11.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        {{ content | safe }}
+      </section>
+    </div>
+
+    <div class="container">
+      <footer class="site-footer">
+        <button type="button" id="crt-toggle">crt: on</button>
+        &nbsp;&middot;&nbsp; <button type="button" id="matrix-toggle">matrix: off</button>
+        &nbsp;&middot;&nbsp; <button type="button" id="fx-toggle">effects: on</button>
+        &nbsp;&middot;&nbsp; <span class="hint">press <kbd>?</kbd> for shortcuts</span>
+        &nbsp;&middot;&nbsp; <a href="{{ '/feed.xml' | url }}">atom feed</a>
+        &nbsp;&middot;&nbsp; theme: <a href="https://github.com/pages-themes/hacker">Hacker</a> (CC0)
+      </footer>
+    </div>
+
+    <script src="{{ '/js/lightbox.js' | url }}?v={{ build }}" defer></script>
+    <script src="{{ '/js/hax.js' | url }}?v={{ build }}" defer></script>
+    <script>
+      (function () {
+        var h = document.documentElement, btn = document.getElementById('crt-toggle');
+        try { if (localStorage.getItem('crt') === 'off') h.classList.add('no-crt'); } catch (e) {}
+        function label() { btn.textContent = 'crt: ' + (h.classList.contains('no-crt') ? 'off' : 'on'); }
+        label();
+        btn.addEventListener('click', function () {
+          h.classList.toggle('no-crt');
+          try { localStorage.setItem('crt', h.classList.contains('no-crt') ? 'off' : 'on'); } catch (e) {}
+          label();
+        });
+      })();
+    </script>
+  </body>
+</html>

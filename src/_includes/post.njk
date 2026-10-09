@@ -1,0 +1,23 @@
+---
+layout: base.njk
+---
+
+<article>
+<small class="prompt"><span class="ps1"><span class="who">visitor</span>@<span class="host">gunderson.io</span>:~$</span> <span class="cmd">cat {{ page.fileSlug }}.md</span></small>
+<small><time datetime="{{ date | isoDate }}">{{ date | longDate }}</time></small>
+<h1>{{ title }}</h1>
+
+{% if categories %}<p class="view">filed under {% for c in categories %}<a class="cat" href="{{ ('/categories/' + (c | tagSlug) + '/') | url }}">{{ c }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+
+<div class="post-body">{{ content | safe }}</div>
+
+{% if tags.length > 1 %}<small class="tags">tags: {% for t in tags %}{% if t != "post" %}<a href="{{ ('/tags/' + (t | tagSlug) + '/') | url }}"><em>{{ t }}</em></a>{% if not loop.last %} - {% endif %}{% endif %}{% endfor %}</small>{% endif %}
+</article>
+
+{% set older = collections.post | getPreviousCollectionItem(page) %}
+{% set newer = collections.post | getNextCollectionItem(page) %}
+<nav class="post-nav">
+  {% if older %}<a rel="prev" href="{{ older.url | url }}">&larr; {{ older.data.title }}</a>{% else %}<span></span>{% endif %}
+  <a href="{{ '/' | url }}">home</a>
+  {% if newer %}<a rel="next" href="{{ newer.url | url }}">{{ newer.data.title }} &rarr;</a>{% else %}<span></span>{% endif %}
+</nav>

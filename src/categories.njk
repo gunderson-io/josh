@@ -1,0 +1,17 @@
+---
+layout: base.njk
+pagination:
+  data: collections.categoryList
+  size: 1
+  alias: tag
+permalink: "/categories/{{ tag.slug }}/"
+eleventyComputed:
+  title: "Category: {{ tag.name }}"
+---
+<h1>Category &ldquo;{{ tag.name }}&rdquo;</h1>
+<ul class="post-list">
+  {% for post in tag.posts %}
+  <li><time datetime="{{ post.date | isoDate }}">{{ post.date | shortDate }} {{ post.date | year }}</time> &mdash; <a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+  {% endfor %}
+</ul>
+<p><a href="{{ '/categories/' | url }}">&larr; All categories</a></p>

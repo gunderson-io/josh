@@ -1,0 +1,17 @@
+---
+layout: base.njk
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag.slug }}/"
+eleventyComputed:
+  title: "Tagged: {{ tag.name }}"
+---
+<h1>Tagged &ldquo;{{ tag.name }}&rdquo;</h1>
+<ul class="post-list">
+  {% for post in tag.posts %}
+  <li><time datetime="{{ post.date | isoDate }}">{{ post.date | shortDate }} {{ post.date | year }}</time> &mdash; <a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+  {% endfor %}
+</ul>
+<p><a href="{{ '/tags/' | url }}">&larr; All tags</a></p>
